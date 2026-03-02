@@ -1,0 +1,39 @@
+{
+  "name": "cfml-mcp-agent",
+  "version": "1.0.0",
+  "description": "B.E.N. — Agente autônomo MCP + MoE + LLM com rotação de chaves de API para CFML.",
+  "main": "dist/agent/cfml-agent.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/agent/cfml-agent.js",
+    "dev": "ts-node src/agent/cfml-agent.ts",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "cfml",
+    "coldfusion",
+    "mcp",
+    "llm",
+    "moe",
+    "mixture-of-experts",
+    "ai-agent",
+    "key-rotation"
+  ],
+  "author": "Paulo Marcelo Andrade Soares Martins <pemartins+bencfml@gmail.com>",
+  "license": "BUSL-1.1",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.24.0",
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "axios": "^1.6.0",
+    "openai": "^4.0.0",
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "ts-node": "^10.9.0",
+    "typescript": "^5.3.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
