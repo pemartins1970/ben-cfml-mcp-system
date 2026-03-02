@@ -116,8 +116,9 @@ Não há formulário complexo. Há um e-mail e uma intenção clara.
 
 Se você se reconhece em algum dos perfis acima — ou em um que não listamos — escreva diretamente:
 
-**Paulo Marcelo Andrade Soares Martins**
+**Pê Martins**
 Criador e mantenedor de B.E.N. — A CFML-MCP-System
+pemartins+bencfml@gmail.com
 
 > Descreva em poucas linhas: quem você é, qual perfil mais se aproxima do seu interesse, e o que você gostaria de explorar. Respondo a todas as mensagens.
 
@@ -133,4 +134,4 @@ Para poupar o tempo de todos:
 
 ---
 
-*Copyright © 2026 Paulo Marcelo Andrade Soares Martins. Distribuído sob Business Source License 1.1.*
+*Copyright © 2026 Pê Martins (pemartins+bencfml@gmail.com). Distribuído sob Business Source License 1.1.*
