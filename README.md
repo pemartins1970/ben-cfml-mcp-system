@@ -1,6 +1,14 @@
 # B.E.N. — A CFML-MCP-System
 ### *Bridge Engine for Native CFML*
 
+![Version](https://img.shields.io/badge/version-1.0.0-00e676?style=flat-square)
+![License](https://img.shields.io/badge/license-BUSL--1.1-ffab00?style=flat-square)
+![Node](https://img.shields.io/badge/node-%3E%3D18.0.0-00e676?style=flat-square&logo=node.js&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.3-3178c6?style=flat-square&logo=typescript&logoColor=white)
+![CFML](https://img.shields.io/badge/CFML-Lucee%20%7C%20Adobe%20CF-e84c4c?style=flat-square)
+![MCP](https://img.shields.io/badge/MCP-native-00e676?style=flat-square)
+![Status](https://img.shields.io/badge/status-active-00e676?style=flat-square)
+
 > CFML ainda roda bilhões de dólares em produção. Nunca teve tooling moderno à altura. **Isso muda agora.**
 
 Uma homenagem em vida ao incansável **Ben Forta** — e uma ponte entre o ecossistema CFML e a nova era de agentes de IA.
