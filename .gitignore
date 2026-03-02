@@ -1,0 +1,57 @@
+# Dependencies
+node_modules/
+jspm_packages/
+
+# Build output
+dist/
+build/
+out/
+
+# Environment variables — NUNCA commitar
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# TypeScript cache
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Coverage
+coverage/
+.nyc_output/
+
+# Cache
+.npm
+.eslintcache
+.cache/
