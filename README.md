@@ -1,5 +1,9 @@
-# CFML-MCP-System
-O primeiro MCP nativo para CFML com agente MCP+MoE+LLM e com um sistema de gerenciamento e rotação de chaves de API.
+# CFML-MCP-System 
+Este é o primeiro MCP nativo para CFML com agente MCP+MoE+LLM e com um sistema de gerenciamento e rotação de chaves de API.A comunidade CFML é pequena, leal, e praticamente abandonada pelos grandes players de tooling. 
+
+Foi criado inicialmente para atender IDEs como Trae, Cursor e outros. Mas é completo o suficiente para você encontrar outras aplicações, e maleável para você customizar e extender.
+
+Deixo aqui o meu abraço ao incansável Ben Forta.
 
 # CFML MCP System
 ## MCP Server + MoE Agent com Rotação de Chaves
@@ -221,3 +225,27 @@ You: .stats   (ver estatísticas de rotação de chaves)
 - Restrinja acesso por IP no web server
 - Use HTTPS em produção
 - Considere adicionar sandbox CF (Security Manager) para limitar operações permitidas
+
+
+Oferece 10 ferramentas MCP prontas para uso no Trae/VS Code/Cursor:
+MóduloResponsabilidadecfml-validator.tsAnálise estática sem executar: tags não fechadas, tags depreciadas, ausência de cfqueryparam, problemas de escopo, segurança (XSS, eval)lucee-bridge.tsComunica com Lucee via Admin API: status, limpar cache, recarregar app, gerenciar datasources, executar códigoadobecf-bridge.tsMesmo para Adobe CF usando CFIDE + WDDXtestbox-runner.tsExecuta suítes TestBox e gera specs BDD/Unit completosfigma-converter.tsChama Figma REST API → extrai nós → gera CFM/CFC/CFScript com Bootstrap 5, Tailwind ou Bulmacfmcp-exec.cfmExecutor CFML no servidor (deploy no webroot, protegido por token + IP)
+
+🤖 cfml-mcp-agent — Agente Autônomo MCP + MoE + LLM
+
+3 subsistemas integrados:
+
+MoE Router — classifica o prompt em 9 tipos de tarefa (cfml_debug, cfml_security_review, cfml_test_generate, ui_design...) e pontua cada expert por capacidade + custo + latência, escolhendo o ideal.
+
+LLM Client multi-provider — interface unificada para Anthropic, OpenAI, Gemini, Groq e Mistral/Ollama, com parsing correto de respostas e tool calls de cada API.
+
+Key Rotation Manager — round-robin com prioridade, detecta 429 via headers HTTP, aplica backoff exponencial (1s→60s), coloca chaves em quarentena após 5 erros, rastreia RPM e budget por chave.
+
+Como usar
+bash# 1. Compile ambos os pacotes
+cd cfml-mcp-server && npm install && npm run build
+cd cfml-mcp-agent && npm install && npm run build
+
+# 2. Deploy cfmcp-exec.cfm no webroot do servidor Lucee
+
+# 3. Configure no Trae (mcp.json) ou rode o agent interativo
+ANTHROPIC_API_KEY_1=sk-ant-xxx node dist/agent/cfml-agent.js
