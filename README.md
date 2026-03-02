@@ -1,16 +1,29 @@
-# CFML-MCP-System 
-Este é o primeiro MCP nativo para CFML com agente MCP+MoE+LLM e com um sistema de gerenciamento e rotação de chaves de API.A comunidade CFML é pequena, leal, e praticamente abandonada pelos grandes players de tooling. 
+# B.E.N. — A CFML-MCP-System
+### *Bridge Engine for Native CFML*
 
-Foi criado inicialmente para atender IDEs como Trae, Cursor e outros. Mas é completo o suficiente para você encontrar outras aplicações, e maleável para você customizar e extender.
+> CFML ainda roda bilhões de dólares em produção. Nunca teve tooling moderno à altura. **Isso muda agora.**
 
-Deixo aqui o meu abraço ao incansável Ben Forta.
+Uma homenagem em vida ao incansável **Ben Forta** — e uma ponte entre o ecossistema CFML e a nova era de agentes de IA.
 
-# CFML MCP System
-## MCP Server + MoE Agent com Rotação de Chaves
+---
+
+## O que é
+
+**B.E.N.** é o primeiro sistema MCP nativo para CFML, combinando:
+
+- **MCP Server** — integração direta com Trae, Cursor, VS Code e qualquer IDE com suporte MCP
+- **Agente MoE + LLM** — roteamento inteligente entre múltiplos modelos de linguagem
+- **Rotação de Chaves de API** — gerenciamento automático de chaves com fallback, cooldown e controle de budget
+
+Projetado para desenvolvedores CFML que merecem ferramentas à altura do que constroem.
+
+---
+
+## Arquitetura
 
 ```
 ╔══════════════════════════════════════════════════════════════════╗
-║                     ARQUITETURA GERAL                           ║
+║                        ARQUITETURA GERAL                        ║
 ╠══════════════════════════════════════════════════════════════════╣
 ║                                                                  ║
 ║  ┌─────────────┐    MCP/stdio    ┌──────────────────────────┐  ║
@@ -44,7 +57,7 @@ Deixo aqui o meu abraço ao incansável Ben Forta.
 
 ---
 
-## 📁 Estrutura do Projeto
+## Estrutura do Projeto
 
 ```
 cfml-mcp-server/              ← Servidor MCP nativo para CFML
@@ -76,96 +89,12 @@ cfml-mcp-agent/               ← Agente autônomo MCP + MoE + LLM
 
 ---
 
-## 🚀 Instalação e Configuração
-
-### 1. MCP Server
-
-```bash
-cd cfml-mcp-server
-npm install
-npm run build
-```
-
-### 2. Agent
-
-```bash
-cd cfml-mcp-agent
-npm install
-npm run build
-```
-
-### 3. Deploy do Executor no Servidor CF
-
-Copie `cfml-mcp-server/deploy/cfmcp-exec.cfm` para o webroot do seu servidor Lucee/Adobe CF.
-
-**IMPORTANTE:** Proteja o arquivo no web server:
-
-```nginx
-# Nginx
-location /cfmcp-exec.cfm {
-    allow 127.0.0.1;
-    allow 10.0.0.0/8;   # sua rede interna
-    deny all;
-}
-```
-
----
-
-## ⚙️ Variáveis de Ambiente
-
-```bash
-# Servidor CF
-export CF_SERVER_TYPE=lucee          # ou "adobe"
-export LUCEE_URL=http://localhost:8888
-export LUCEE_ADMIN_PASSWORD=sua_senha_aqui
-
-# Adobe CF (se usar adobe)
-export ADOBE_CF_URL=http://localhost:8500
-export ADOBE_CF_USER=admin
-export ADOBE_CF_PASSWORD=sua_senha_aqui
-
-# Figma (opcional - para conversão de designs)
-export FIGMA_API_TOKEN=figd_xxxx
-
-# Chaves LLM (para o Agent - adicione quantas quiser)
-export ANTHROPIC_API_KEY_1=sk-ant-xxx
-export ANTHROPIC_API_KEY_2=sk-ant-yyy    # rotação automática
-export OPENAI_API_KEY_1=sk-proj-xxx
-export GEMINI_API_KEY=AIzaSy-xxx
-export GROQ_API_KEY=gsk_xxx
-```
-
----
-
-## 🔧 Configuração no Trae / VS Code / Cursor
-
-Adicione ao `mcp.json`:
-
-```json
-{
-  "mcpServers": {
-    "cfml": {
-      "command": "node",
-      "args": ["/path/to/cfml-mcp-server/dist/index.js"],
-      "env": {
-        "LUCEE_URL": "http://localhost:8888",
-        "LUCEE_ADMIN_PASSWORD": "lucee",
-        "CF_SERVER_TYPE": "lucee",
-        "FIGMA_API_TOKEN": ""
-      }
-    }
-  }
-}
-```
-
----
-
-## 🤖 Ferramentas MCP Disponíveis
+## Ferramentas MCP Disponíveis
 
 | Tool | Descrição |
 |------|-----------|
 | `cfml_validate_syntax` | Valida código CFML/CFScript sem executar |
-| `cfml_validate_file` | Valida arquivo .cfm/.cfc no servidor |
+| `cfml_validate_file` | Valida arquivo `.cfm`/`.cfc` no servidor |
 | `cfml_server_status` | Status do servidor (memória, uptime, DSNs) |
 | `cfml_clear_cache` | Limpa caches (template, query, tudo) |
 | `cfml_reload_app` | Reinicia aplicação CFML |
@@ -177,75 +106,104 @@ Adicione ao `mcp.json`:
 
 ---
 
-## 🧠 Sistema MoE - Experts e Capacidades
+## Sistema MoE — Experts e Capacidades
+
+O router MoE classifica automaticamente cada tarefa em 9 categorias e seleciona o expert ideal por capacidade, custo e latência.
 
 | Expert | Provider | Pontos Fortes | Custo |
 |--------|----------|---------------|-------|
 | Claude Sonnet 4 | Anthropic | Código CFML, segurança, geral | $3/Mtoken |
 | GPT-4o | OpenAI | UI, explicações, geral | $5/Mtoken |
-| Gemini 1.5 Flash | Google | Contexto longo, barato | $0.075/Mtoken |
+| Gemini 1.5 Flash | Google | Contexto longo, custo baixo | $0.075/Mtoken |
 | Llama 3.1 70B | Groq | Ultra-baixa latência | $0.59/Mtoken |
 | Mistral Large | Mistral | Código, custo-benefício | $2/Mtoken |
 
-O router MoE classifica automaticamente cada tarefa e direciona para o expert ideal.
+---
+
+## Sistema de Rotação de Chaves
+
+- Round-robin com pesos por prioridade
+- Detecção automática de rate limits via headers HTTP
+- Cooldown exponencial: 1s → 2s → 4s → ... → 60s
+- Quarentena de chaves com 5+ erros consecutivos
+- Reset de janela a cada 60 segundos (RPM tracking)
+- Controle de budget por chave (USD)
 
 ---
 
-## 🔑 Sistema de Rotação de Chaves
-
-- **Round-robin** com pesos por prioridade
-- **Detecção automática** de rate limits via headers HTTP
-- **Cooldown exponencial**: 1s → 2s → 4s → ... → 60s
-- **Quarentena** de chaves com 5+ erros consecutivos
-- **Reset de janela** a cada 60 segundos (RPM tracking)
-- **Controle de budget** por chave (USD)
-
----
-
-## 💬 Exemplo de Uso do Agent
+## Instalação Rápida
 
 ```bash
-cd cfml-mcp-agent
-ANTHROPIC_API_KEY_1=sk-ant-xxx node dist/agent/cfml-agent.ts
+# MCP Server
+cd cfml-mcp-server
+npm install && npm run build
 
-# Exemplos de prompts:
-You: Valide este código: <cfquery name="q" datasource="myDS">SELECT * FROM users WHERE id=#url.id#</cfquery>
-You: Gere um spec TestBox BDD para o componente models.UserService
-You: Limpe o cache do servidor Lucee e mostre o status
-You: Converta o Figma https://figma.com/file/abc123 em um componente CFM com Bootstrap 5
-You: .stats   (ver estatísticas de rotação de chaves)
+# Agent
+cd cfml-mcp-agent
+npm install && npm run build
+
+# Deploy do executor no servidor CF
+cp cfml-mcp-server/deploy/cfmcp-exec.cfm /webroot/
+```
+
+Para o guia completo de instalação, configuração de variáveis de ambiente, proteção por IP e integração com IDEs, veja [`INSTALACAO.md`](./INSTALACAO.md).
+
+---
+
+## Configuração Mínima 100% Gratuita
+
+O sistema funciona com chaves gratuitas. Esta configuração não custa nada:
+
+```bash
+export GEMINI_API_KEY=AIzaSy-xxx     # Google AI Studio — gratuito
+export GROQ_API_KEY=gsk_xxx          # console.groq.com — gratuito
+# + Ollama local para uso offline e privado
 ```
 
 ---
 
-## 🛡️ Segurança
+## Exemplo de Uso
 
-- `cfmcp-exec.cfm` valida token em **toda** requisição
-- Token lido de variável de ambiente (nunca hardcoded)
-- Restrinja acesso por IP no web server
+```bash
+cd cfml-mcp-agent
+node dist/agent/cfml-agent.js
+
+You: Valide este código: <cfquery name="q" datasource="myDS">SELECT * FROM users WHERE id=#url.id#</cfquery>
+You: Gere um spec TestBox BDD para o componente models.UserService
+You: Limpe o cache do servidor Lucee e mostre o status
+You: Converta o Figma https://figma.com/file/abc123 em CFM com Bootstrap 5
+You: .stats   # estatísticas de rotação de chaves
+```
+
+---
+
+## Segurança
+
+- `cfmcp-exec.cfm` valida token em toda requisição
+- Token lido de variável de ambiente — nunca hardcoded
+- Restrição de acesso por IP no web server (Nginx/Apache/IIS)
 - Use HTTPS em produção
-- Considere adicionar sandbox CF (Security Manager) para limitar operações permitidas
+- Considere Security Manager CF para sandboxing de operações
 
+---
 
-Oferece 10 ferramentas MCP prontas para uso no Trae/VS Code/Cursor:
-MóduloResponsabilidadecfml-validator.tsAnálise estática sem executar: tags não fechadas, tags depreciadas, ausência de cfqueryparam, problemas de escopo, segurança (XSS, eval)lucee-bridge.tsComunica com Lucee via Admin API: status, limpar cache, recarregar app, gerenciar datasources, executar códigoadobecf-bridge.tsMesmo para Adobe CF usando CFIDE + WDDXtestbox-runner.tsExecuta suítes TestBox e gera specs BDD/Unit completosfigma-converter.tsChama Figma REST API → extrai nós → gera CFM/CFC/CFScript com Bootstrap 5, Tailwind ou Bulmacfmcp-exec.cfmExecutor CFML no servidor (deploy no webroot, protegido por token + IP)
+## Licença
 
-🤖 cfml-mcp-agent — Agente Autônomo MCP + MoE + LLM
+Este projeto é distribuído sob a **Business Source License 1.1 (BUSL 1.1)**.
 
-3 subsistemas integrados:
+- **Uso pessoal e não-comercial:** gratuito
+- **Uso comercial:** requer licença paga — entre em contato
 
-MoE Router — classifica o prompt em 9 tipos de tarefa (cfml_debug, cfml_security_review, cfml_test_generate, ui_design...) e pontua cada expert por capacidade + custo + latência, escolhendo o ideal.
+Em **1º de março de 2036**, o código converte automaticamente para **Apache License 2.0**.
 
-LLM Client multi-provider — interface unificada para Anthropic, OpenAI, Gemini, Groq e Mistral/Ollama, com parsing correto de respostas e tool calls de cada API.
+Veja o arquivo [`LICENSE`](./LICENSE) para os termos completos.
 
-Key Rotation Manager — round-robin com prioridade, detecta 429 via headers HTTP, aplica backoff exponencial (1s→60s), coloca chaves em quarentena após 5 erros, rastreia RPM e budget por chave.
+---
 
-Como usar
-bash# 1. Compile ambos os pacotes
-cd cfml-mcp-server && npm install && npm run build
-cd cfml-mcp-agent && npm install && npm run build
+## Sobre o Nome
 
-# 2. Deploy cfmcp-exec.cfm no webroot do servidor Lucee
+**B.E.N.** — *Bridge Engine for Native CFML* — é uma homenagem em vida a **Ben Forta**, cujo trabalho incansável moldou gerações de desenvolvedores CFML ao redor do mundo.
 
-# 3. Configure no Trae (mcp.json) ou rode o agent interativo
-ANTHROPIC_API_KEY_1=sk-ant-xxx node dist/agent/cfml-agent.js
+---
+
+*Copyright © 2026 Paulo Marcelo Andrade Soares Martins. Todos os direitos reservados.*
