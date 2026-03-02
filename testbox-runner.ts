@@ -1,0 +1,288 @@
+/**
+ * TestBox Runner - Runs TestBox BDD/Unit tests via the CF server
+ */
+
+interface TestRunOptions {
+  directory?: string;
+  spec?: string;
+  reporter?: string;
+  labels?: string[];
+  verbose?: boolean;
+}
+
+interface TestResult {
+  status: "passed" | "failed" | "error";
+  totalTests: number;
+  passed: number;
+  failed: number;
+  skipped: number;
+  duration: number;
+  specs: SpecResult[];
+  coverage?: object;
+  raw?: string;
+}
+
+interface SpecResult {
+  name: string;
+  status: "passed" | "failed" | "skipped";
+  duration: number;
+  message?: string;
+  trace?: string;
+}
+
+export class TestBoxRunner {
+  private bridge: any;
+
+  constructor(bridge: any) {
+    this.bridge = bridge;
+  }
+
+  async run(options: TestRunOptions): Promise<TestResult> {
+    const { directory, spec, reporter = "json", labels, verbose } = options;
+
+    // Build TestBox runner CFScript
+    const labelsStr = labels?.length ? `labels="${labels.join(",")}"` : "";
+    const dirStr = directory ? `directory="#expandPath("${directory}")#"` : "";
+    const specStr = spec ? `testSpecs="${spec}"` : "";
+
+    const code = `
+      <cfscript>
+        try {
+          // Ensure TestBox is available
+          if (!isDefined("testBox")) {
+            testBox = new testbox.system.TestBox(
+              ${dirStr}
+              ${specStr}
+              ${labelsStr}
+            );
+          } else {
+            testBox.addDirectory(expandPath("${directory || "/tests"}"));
+            ${spec ? `testBox.addSpec("${spec}");` : ""}
+          }
+
+          // Run tests
+          results = testBox.run(
+            reporter="${reporter}",
+            verbose=${verbose ? "true" : "false"}
+          );
+
+          // Parse results
+          if ("${reporter}" == "json") {
+            writeOutput(isJSON(results) ? results : serializeJSON({
+              status: "error",
+              message: "TestBox not installed or failed to run",
+              hint: "Install TestBox via CommandBox: box install testbox"
+            }));
+          } else {
+            writeOutput(results);
+          }
+
+        } catch(e) {
+          writeOutput(serializeJSON({
+            status: "error",
+            message: e.message,
+            detail: e.detail ?: "",
+            stackTrace: e.stackTrace ?: ""
+          }));
+        }
+      </cfscript>
+    `;
+
+    try {
+      const output = await this.bridge.executeCode(code, "json");
+      const raw = JSON.parse(output);
+
+      if (raw.status === "error") {
+        return {
+          status: "error",
+          totalTests: 0,
+          passed: 0,
+          failed: 0,
+          skipped: 0,
+          duration: 0,
+          specs: [],
+          raw: output,
+        };
+      }
+
+      return this.parseTestBoxResults(raw);
+    } catch (e: any) {
+      return {
+        status: "error",
+        totalTests: 0,
+        passed: 0,
+        failed: 0,
+        skipped: 0,
+        duration: 0,
+        specs: [],
+        raw: e.message,
+      };
+    }
+  }
+
+  private parseTestBoxResults(raw: any): TestResult {
+    const stats = raw.totalStats || raw.stats || {};
+    const bundles = raw.bundleStats || [];
+
+    const specs: SpecResult[] = [];
+    for (const bundle of bundles) {
+      for (const suite of bundle.suites || []) {
+        for (const spec of suite.specs || []) {
+          specs.push({
+            name: `${bundle.name} > ${suite.name} > ${spec.name}`,
+            status: spec.status === "Passed" ? "passed" : spec.status === "Skipped" ? "skipped" : "failed",
+            duration: spec.totalDuration || 0,
+            message: spec.failMessage || undefined,
+            trace: spec.failOrigin || undefined,
+          });
+        }
+      }
+    }
+
+    return {
+      status: (stats.totalFail || 0) > 0 ? "failed" : "passed",
+      totalTests: stats.totalSpecs || specs.length,
+      passed: stats.totalPass || specs.filter((s) => s.status === "passed").length,
+      failed: stats.totalFail || specs.filter((s) => s.status === "failed").length,
+      skipped: stats.totalSkipped || specs.filter((s) => s.status === "skipped").length,
+      duration: stats.totalDuration || 0,
+      specs,
+    };
+  }
+
+  // ─────────────────────────────────────────────
+  // Test Spec Generator
+  // ─────────────────────────────────────────────
+  async generateSpec(componentPath: string, testType = "bdd", includeMocks = true): Promise<string> {
+    const shortName = componentPath.split(".").pop() || componentPath;
+    const timestamp = new Date().toISOString().split("T")[0];
+
+    if (testType === "bdd") {
+      return this.generateBDDSpec(componentPath, shortName, includeMocks, timestamp);
+    }
+    return this.generateUnitSpec(componentPath, shortName, includeMocks, timestamp);
+  }
+
+  private generateBDDSpec(path: string, name: string, mocks: boolean, date: string): string {
+    return `/**
+ * ${name}Spec - BDD Test Suite
+ * Generated by CFML MCP Server on ${date}
+ * Component: ${path}
+ */
+component extends="testbox.system.BaseSpec" {
+
+  /*** SETUP ***/
+  function beforeAll() {
+    // Runs once before all tests in this suite
+    ${mocks ? `variables.mockery = getMockBox();` : ""}
+  }
+
+  function beforeEach() {
+    // Runs before each test
+    variables.sut = createObject("component", "${path}");
+    ${mocks ? `// variables.mockDep = variables.mockery.createMock("path.to.Dependency");` : ""}
+  }
+
+  function afterEach() {
+    // Cleanup after each test
+  }
+
+  /*** TEST SUITES ***/
+  function run( currentSpec ) {
+
+    describe("${name}", function() {
+
+      describe("initialization", function() {
+        it("should be instantiable", function() {
+          expect(variables.sut).toBeTypeOf("component");
+        });
+      });
+
+      describe("public functions", function() {
+
+        it("should have expected public methods", function() {
+          // TODO: Replace with actual public methods of ${name}
+          // expect(variables.sut).toHaveKey("init");
+          // expect(variables.sut).toHaveKey("save");
+          // expect(variables.sut).toHaveKey("findById");
+          pending("Add real public method checks");
+        });
+
+        xit("should perform main business logic", function() {
+          // TODO: Add actual test
+          var result = variables.sut.yourMethod(arg1 = "value");
+          expect(result).notToBeEmpty();
+          expect(result).toBeTypeOf("struct");
+        });
+
+      });
+
+      describe("error handling", function() {
+
+        it("should throw on invalid input", function() {
+          expect(function() {
+            variables.sut.yourMethod(arg1 = "");
+          }).toThrow(type = "Application");
+        });
+
+      });
+
+      ${mocks ? `
+      describe("with mocked dependencies", function() {
+        it("should call dependency correctly", function() {
+          // var mockService = variables.mockery.createStub().$results("stubValue");
+          // variables.sut.setService(mockService);
+          // var result = variables.sut.methodThatCallsService();
+          // expect(mockService.$once()).toBeTrue();
+          pending("Wire up real mock dependencies");
+        });
+      });` : ""}
+
+    }); // end describe ${name}
+
+  } // end run()
+
+}
+`;
+  }
+
+  private generateUnitSpec(path: string, name: string, mocks: boolean, date: string): string {
+    return `/**
+ * ${name}Test - Unit Test Suite
+ * Generated by CFML MCP Server on ${date}
+ * Component: ${path}
+ */
+component extends="testbox.system.BaseSpec" {
+
+  function setup() {
+    variables.sut = createObject("component", "${path}");
+    ${mocks ? `variables.mockBox = getMockBox();` : ""}
+  }
+
+  function teardown() {
+    structDelete(variables, "sut");
+  }
+
+  /*** TESTS - naming convention: test<MethodName><Scenario> ***/
+
+  function testInstantiation() {
+    expect(variables.sut).toBeTypeOf("component");
+  }
+
+  function testYourMethodReturnsExpected() {
+    // TODO: implement
+    // var result = variables.sut.yourMethod(param = "value");
+    // expect(result).notToBeEmpty();
+    pending("Implement test for yourMethod()");
+  }
+
+  function testYourMethodThrowsOnBadInput() {
+    expect(function() {
+      variables.sut.yourMethod(param = javaCast("null", ""));
+    }).toThrow();
+  }
+
+}
+`;
+  }
+}
