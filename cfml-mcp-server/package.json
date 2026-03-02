@@ -1,0 +1,35 @@
+{
+  "name": "cfml-mcp-server",
+  "version": "1.0.0",
+  "description": "B.E.N. — MCP Server nativo para CFML. Integração com Trae, Cursor e VS Code.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "cfml",
+    "coldfusion",
+    "lucee",
+    "mcp",
+    "mcp-server",
+    "developer-tools"
+  ],
+  "author": "Paulo Marcelo Andrade Soares Martins <pemartins+bencfml@gmail.com>",
+  "license": "BUSL-1.1",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "axios": "^1.6.0",
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "ts-node": "^10.9.0",
+    "typescript": "^5.3.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
