@@ -4,63 +4,177 @@
 ![Version](https://img.shields.io/badge/version-1.0.0-00e676?style=flat-square)
 ![License](https://img.shields.io/badge/license-BUSL--1.1-ffab00?style=flat-square)
 ![Node](https://img.shields.io/badge/node-%3E%3D18.0.0-00e676?style=flat-square&logo=node.js&logoColor=white)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.3-3178c6?style=flat-square&logo=typescript&logoColor=white)
 ![CFML](https://img.shields.io/badge/CFML-Lucee%20%7C%20Adobe%20CF-e84c4c?style=flat-square)
-![MCP](https://img.shields.io/badge/MCP-native-00e676?style=flat-square)
 ![Status](https://img.shields.io/badge/status-active-00e676?style=flat-square)
 
-> CFML ainda roda bilhões de dólares em produção. Nunca teve tooling moderno à altura. **Isso muda agora.**
+**ENGLISH**
 
-Uma homenagem em vida ao incansável **Ben Forta** — e uma ponte entre o ecossistema CFML e a nova era de agentes de IA.
+> "ColdFusion is a dead language." If you've been working with CFML for a while, you already know how it feels. But CF keeps running billions of dollars every day. The community is small, loyal, and completely orphaned from modern tooling. **B.E.N. changes that.**
+
+## About the name
+
+**B.E.N.** — *Bridge Engine for Native CFML* — is a living tribute to **Ben Forta**, whose tireless work shaped generations of CFML developers around the world, and a bridge between the CFML ecosystem and the new era of AI agents.
+---
+
+## 🚀 Overview 
+
+**B.E.N.** is the first native Model Context Protocol (MCP) system for CFML, combining:
+
+- **MCP Server** — Direct integration with Trae, Cursor, VS Code, and any IDE with MCP support.
+- **MoE + LLM Agent** — Intelligent routing between multiple language models (Claude, GPT, Gemini, Llama, Mistral).
+- **API Key Management** — Automatic rotation with fallback, exponential backoff, and budget control.
+
+### Integration with Agents and IDEs
+Any tool that implements the MCP client can consume the server directly:
+- **Trae / Cursor**: Native integration via `mcp.json`.
+- **VS Code**: Via Anthropic MCP or Continue.dev extensions.
+- **Claude Desktop**: Adds the server to your local config for a full desktop AI interface.
+- **Automation**: Compatible with n8n/Make (via SSE) and CI/CD pipelines for code validation.
 
 ---
 
-## O que é
+## 🔍 Diagnostics & Support (Environment Check)
+
+Before configuring the MCP, validate if your CFML server meets the requirements (like TLS 1.3 support for AI APIs).
+Antes de configurar o MCP, valide se seu servidor CFML atende aos requisitos (como suporte a TLS 1.3).
+
+1.  **Prepare:** Copy [`tools/ben_check.cfm`](./tools/ben_check.cfm) to your server's webroot.
+2.  **Run:** Access `http://your-server/ben_check.cfm` in your browser.
+3.  **Analyze:** The script checks Java version (11+), connectivity, and write permissions.
+4.  **Support:** If issues persist, click **"Copy Log"** in the script and attach the JSON to a [GitHub Issue](https://github.com/pemartins1970/ben-cfml-mcp-system/issues).
+
+## ⚖️ Licensing & Terms 
+
+This project is distributed under the **Business Source License 1.1 (BUSL 1.1)**.
+
+B.E.N. is built with a "Contribution First" mindset. To ensure project sustainability:
+* **FREE USE:** Personal projects, Open Source contributions, and individual learning.
+* **COMMERCIAL USE:** If you are using B.E.N. for client-billable work, within a corporate environment, or if your employer derives direct value from its use, a **Commercial License** is required.
+* *Note: Commercial plans for teams (5+ seats) are under development. Contact us for early access.*
+
+
+**README EM PORTUGUÊS**
+
+> "ColdFusion é uma linguagem morta." Se você trabalha com CFML há algum tempo, já sabe como é. Mas o CF continua movimentando bilhões de dólares todos os dias. A comunidade é pequena, leal e completamente órfã de ferramentas modernas. **B.E.N. muda isso.**
+
+## Sobre o Nome
+
+**B.E.N.** — *Bridge Engine for Native CFML* — é uma homenagem em vida a **Ben Forta**, cujo trabalho incansável moldou gerações de desenvolvedores CFML ao redor do mundo, e uma ponte entre o ecossistema CFML e a nova era dos agentes de IA.
+
+## 🚀 Visão Geral (Português)
 
 **B.E.N.** é o primeiro sistema MCP nativo para CFML, combinando:
 
-- **MCP Server** — integração direta com Trae, Cursor, VS Code e qualquer IDE com suporte MCP
-- **Agente MoE + LLM** — roteamento inteligente entre múltiplos modelos de linguagem
-- **Rotação de Chaves de API** — gerenciamento automático de chaves com fallback, cooldown e controle de budget
+- **MCP Server** — Integração direta com Trae, Cursor, VS Code e qualquer IDE com suporte a MCP.
+- **Agente MoE + LLM** — Roteamento inteligente entre múltiplos modelos (Claude, GPT, Gemini, Llama, Mistral).
+- **Gestão de Chaves de API** — Rotação automática com fallback, cooldown e controle de orçamento.
 
-Projetado para desenvolvedores CFML que merecem ferramentas à altura do que constroem.
+### Integração com Agentes e IDEs
+Qualquer ferramenta que implemente o cliente MCP pode consumir o servidor:
+- **Trae / Cursor**: Integração nativa via `mcp.json`.
+- **VS Code**: Através das extensões Anthropic MCP ou Continue.dev.
+- **Claude Desktop**: Interface direta com o agente de desktop da Anthropic.
+- **Automação**: Compatível com n8n/Make (via SSE) e pipelines de CI/CD para validação de código.
 
 ---
+
+## 🔍 Diagnóstico e Suporte (Verificação de Ambiente)
+
+Antes de configurar o MCP, verifique se o seu servidor CFML atende aos requisitos (como suporte a TLS 1.3 para APIs de IA).
+Antes de configurar o MCP, verifique se o seu servidor CFML atende aos requisitos (como suporte a TLS 1.3).
+
+1. **Prepare:** Copie o arquivo [`tools/ben_check.cfm`](./tools/ben_check.cfm) para a raiz do seu servidor web.
+2. **Execute:** Acesse `http://seu-servidor/ben_check.cfm` no seu navegador.
+3. **Analise:** O script verifica a versão do Java (11+), a conectividade e as permissões de gravação.
+4. **Suporte:** Se os problemas persistirem, clique em **"Copiar Log"** no script e anexe o JSON a uma [Issue do GitHub](https://github.com/pemartins1970/ben-cfml-mcp-system/issues).
+
+---
+## ⚖️ Licenciamento e Termos
+
+B.E.N. foi construído com uma mentalidade de "Contribuição Primeiro". Para garantir a sustentabilidade do projeto:
+* **USO GRATUITO:** Projetos pessoais, contribuições para Open Source e aprendizado individual.
+* **USO COMERCIAL:** Se você utiliza o B.E.N. para trabalhos faturados a clientes, em ambientes corporativos, ou se seu empregador obtém valor direto do uso da ferramenta, uma **Licença Comercial** é necessária.
+* *Nota: Planos comerciais para times estão em desenvolvimento.*
+
+On **March 1, 2036**, the code automatically converts to **Apache License 2.0**.
+See the [`LICENSE`](./LICENSE) file for full terms.
+
+---
+
+
+# B.E.N. — A CFML-MCP-System
+- `cfmcp-exec.cfm` valida token em toda requisição
+- Token lido de variável de ambiente — nunca hardcoded
+- Restrição de acesso por IP no web server (Nginx/Apache/IIS)
+- Use HTTPS em produção
+- Considere Security Manager CF para sandboxing de operações
+
+---
+
+## Licença
+
+Este projeto é distribuído sob a **Business Source License 1.1 (BUSL 1.1)**.
+
+⚖️ Licensing & Terms / Licenciamento e Termos
+English:
+B.E.N. is built with a "Contribution First" mindset. To ensure project sustainability and prevent unfair commercial exploitation:
+
+FREE USE: Personal projects, Open Source contributions, and individual learning.
+
+COMMERCIAL USE: If you are using B.E.N. for client-billable work, within a corporate environment, or if your employer derives direct value from its use, a Commercial License is required.
+
+Note: Commercial plans for teams (5+ seats) are under development. Contact us for early access.
+
+Português:
+O B.E.N. foi construído com uma mentalidade de "Contribuição Primeiro". Para garantir a sustentabilidade do projeto e evitar a exploração comercial predatória:
+
+USO GRATUITO: Projetos pessoais, contribuições para Open Source e aprendizado individual.
+
+USO COMERCIAL: Se você utiliza o B.E.N. para trabalhos faturados a clientes, em ambientes corporativos, ou se seu empregador obtém valor direto do uso da ferramenta, uma Licença Comercial é necessária.
+
+Nota: Planos comerciais para times (acima de 5 usuários) estão em desenvolvimento. Entre em contato para acesso antecipado.
+
+Em **1º de março de 2036**, o código converte automaticamente para **Apache License 2.0**.
+
+Veja o arquivo [`LICENSE`](./LICENSE) para os termos completos.
+
+---
+
 
 ## Arquitetura
 
 ```
-╔══════════════════════════════════════════════════════════════════╗
-║                        ARQUITETURA GERAL                        ║
-╠══════════════════════════════════════════════════════════════════╣
-║                                                                  ║
-║  ┌─────────────┐    MCP/stdio    ┌──────────────────────────┐  ║
-║  │  Trae IDE   │◄───────────────►│   CFML MCP Server        │  ║
-║  │  VS Code    │    ou SSE        │  (cfml-mcp-server)       │  ║
-║  │  Cursor     │                  │                          │  ║
-║  └─────────────┘                  │  ┌──────────────────┐   │  ║
-║                                   │  │ CFML Validator   │   │  ║
-║  ┌─────────────────────────────┐  │  │ Syntax checker   │   │  ║
-║  │   CFML MCP Agent            │  │  └──────────────────┘   │  ║
-║  │                             │  │  ┌──────────────────┐   │  ║
+╔═══════════════════════════════════════════════════════════════╗
+║                        ARQUITETURA GERAL                      ║
+╠═══════════════════════════════════════════════════════════════╣
+║                                                               ║
+║  ┌─────────────┐    MCP/stdio    ┌─────────────────────────┐  ║
+║  │  Trae IDE   │◄───────────────►│   CFML MCP Server       │  ║
+║  │  VS Code    │    ou SSE       │  (cfml-mcp-server)      │  ║
+║  │  Cursor     │                 │                         │  ║
+║  └─────────────┘                 │  ┌──────────────────┐   │  ║
+║                                  │  │ CFML Validator   │   │  ║
+║  ┌────────────────────────────┐  │  │ Syntax checker   │   │  ║
+║  │   CFML MCP Agent           │  │  └──────────────────┘   │  ║
+║  │                            │  │  ┌──────────────────┐   │  ║
 ║  │  ┌─────────┐ ┌──────────┐  │  │  │ Lucee Bridge     │   │  ║
 ║  │  │MoE      │ │Key       │  │  │  │ Adobe CF Bridge  │   │  ║
 ║  │  │Router   │ │Rotation  │  │  │  └──────────────────┘   │  ║
 ║  │  └────┬────┘ └────┬─────┘  │  │  ┌──────────────────┐   │  ║
-║  │       │           │         │  │  │ TestBox Runner   │   │  ║
+║  │       │           │        │  │  │ TestBox Runner   │   │  ║
 ║  │  ┌────▼───────────▼─────┐  │  │  └──────────────────┘   │  ║
 ║  │  │   LLM Client         │  │  │  ┌──────────────────┐   │  ║
 ║  │  │  ┌───────────────┐   │  │  │  │ Figma Converter  │   │  ║
 ║  │  │  │ Anthropic     │   │  │  │  └──────────────────┘   │  ║
-║  │  │  │ OpenAI        │   │  │  └──────────────────────────┘  ║
-║  │  │  │ Gemini        │   │  │             │                  ║
+║  │  │  │ OpenAI        │   │  │  └─────────────────────────┘  ║
+║  │  │  │ Gemini        │   │  │             │                 ║
 ║  │  │  │ Groq          │   │  │       HTTP POST               ║
-║  │  │  │ Mistral       │   │  │             ▼                  ║
-║  │  │  └───────────────┘   │  │  ┌──────────────────────────┐  ║
-║  │  └──────────────────────┘  │  │  Lucee / Adobe CF Server  │  ║
-║  └─────────────────────────────┘  │  (cfmcp-exec.cfm)        │  ║
-║                                   └──────────────────────────┘  ║
-╚══════════════════════════════════════════════════════════════════╝
+║  │  │  │ Mistral       │   │  │             ▼                 ║
+║  │  │  └───────────────┘   │  │   ┌──────────────────────__─┐ ║
+║  │  └──────────────────────┘  │   │  Lucee / Adobe CF Server│ ║
+║  └────────────────────────────┘   │  (cfmcp-exec.cfm)       │ ║
+║                                   └──────────────────────_──┘ ║
+╚═══════════════════════════════════════════════════════════════╝
 ```
 
 ---
@@ -193,43 +307,5 @@ You: .stats   # estatísticas de rotação de chaves
 - Use HTTPS em produção
 - Considere Security Manager CF para sandboxing de operações
 
----
 
-## Licença
-
-Este projeto é distribuído sob a **Business Source License 1.1 (BUSL 1.1)**.
-
-⚖️ Licensing & Terms / Licenciamento e Termos
-English:
-B.E.N. is built with a "Contribution First" mindset. To ensure project sustainability and prevent unfair commercial exploitation:
-
-FREE USE: Personal projects, Open Source contributions, and individual learning.
-
-COMMERCIAL USE: If you are using B.E.N. for client-billable work, within a corporate environment, or if your employer derives direct value from its use, a Commercial License is required.
-
-Note: Commercial plans for teams (5+ seats) are under development. Contact us for early access.
-
-Português:
-O B.E.N. foi construído com uma mentalidade de "Contribuição Primeiro". Para garantir a sustentabilidade do projeto e evitar a exploração comercial predatória:
-
-USO GRATUITO: Projetos pessoais, contribuições para Open Source e aprendizado individual.
-
-USO COMERCIAL: Se você utiliza o B.E.N. para trabalhos faturados a clientes, em ambientes corporativos, ou se seu empregador obtém valor direto do uso da ferramenta, uma Licença Comercial é necessária.
-
-Nota: Planos comerciais para times (acima de 5 usuários) estão em desenvolvimento. Entre em contato para acesso antecipado.
-
-Em **1º de março de 2036**, o código converte automaticamente para **Apache License 2.0**.
-
-Veja o arquivo [`LICENSE`](./LICENSE) para os termos completos.
-
-
-
----
-
-## Sobre o Nome
-
-**B.E.N.** — *Bridge Engine for Native CFML* — é uma homenagem em vida a **Ben Forta**, cujo trabalho incansável moldou gerações de desenvolvedores CFML ao redor do mundo.
-
----
-
-*Copyright © 2026 Paulo Marcelo Andrade Soares Martins. Todos os direitos reservados.*
+*Copyright © 2026 Pê Martins. All rights reserved.*
