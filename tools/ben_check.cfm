@@ -20,7 +20,7 @@
     System = createObject("java", "java.lang.System");
     diagnostics.java.version = System.getProperty("java.version");
     diagnostics.java.vendor = System.getProperty("java.vendor");
-    diagnostics.java.is_ok = (listFirst(diagnostics.java.version, ".") >= 11 || listFirst(diagnostics.java.version) >= 11);
+    diagnostics.java.is_ok = (val(listFirst(diagnostics.java.version, ".")) >= 11);
 
     if (!diagnostics.java.is_ok) diagnostics.overall_status = "ERROR";
 
@@ -116,7 +116,7 @@
             <strong>Connectivity / Conectividade:</strong><br>
             <cfloop array="#diagnostics.network.endpoints#" index="ep">
                 <div style="font-size: 13px; margin-top: 4px;">
-                    [#ep.name#]: <b style="color: #(ep.status == 'OK' ? '#2ea44f' : '#d73a49')#">#ep.status#</b>
+                    [#ep.name#]: <b style="color: #(ep.status == 'OK' ? '##2ea44f' : '##d73a49')#">#ep.status#</b>
                 </div>
             </cfloop>
         </div>
