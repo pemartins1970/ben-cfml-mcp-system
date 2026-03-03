@@ -5,6 +5,19 @@
 
 ---
 
+Diagnostics & Support (Environment Check)
+Before configuring the MCP, we highly recommend validating if your CFML server (Lucee or Adobe) meets the connectivity and security requirements (such as TLS 1.3 support for AI APIs).
+
+Prepare: Copy the tools/ben_check.cfm file to your server's webroot.
+
+Run: Access http://your-server/ben_check.cfm in your browser.
+
+Analyze: The script will check your Java version (11+ required), outbound connectivity, and write permissions.
+
+Need Help? If the environment is "OK" but the system fails, click the "Copy Log / Copiar Log" button in the script and attach the JSON to a GitHub Issue.
+
+---
+
 ## Prerequisites
 
 Before you begin, make sure you have:
