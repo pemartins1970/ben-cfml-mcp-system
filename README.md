@@ -199,12 +199,30 @@ You: .stats   # estatísticas de rotação de chaves
 
 Este projeto é distribuído sob a **Business Source License 1.1 (BUSL 1.1)**.
 
-- **Uso pessoal e não-comercial:** gratuito
-- **Uso comercial:** requer licença paga — entre em contato
+⚖️ Licensing & Terms / Licenciamento e Termos
+English:
+B.E.N. is built with a "Contribution First" mindset. To ensure project sustainability and prevent unfair commercial exploitation:
+
+FREE USE: Personal projects, Open Source contributions, and individual learning.
+
+COMMERCIAL USE: If you are using B.E.N. for client-billable work, within a corporate environment, or if your employer derives direct value from its use, a Commercial License is required.
+
+Note: Commercial plans for teams (5+ seats) are under development. Contact us for early access.
+
+Português:
+O B.E.N. foi construído com uma mentalidade de "Contribuição Primeiro". Para garantir a sustentabilidade do projeto e evitar a exploração comercial predatória:
+
+USO GRATUITO: Projetos pessoais, contribuições para Open Source e aprendizado individual.
+
+USO COMERCIAL: Se você utiliza o B.E.N. para trabalhos faturados a clientes, em ambientes corporativos, ou se seu empregador obtém valor direto do uso da ferramenta, uma Licença Comercial é necessária.
+
+Nota: Planos comerciais para times (acima de 5 usuários) estão em desenvolvimento. Entre em contato para acesso antecipado.
 
 Em **1º de março de 2036**, o código converte automaticamente para **Apache License 2.0**.
 
 Veja o arquivo [`LICENSE`](./LICENSE) para os termos completos.
+
+
 
 ---
 
