@@ -20,6 +20,17 @@
 
 ## 1. Pré-requisitos
 
+🔍 Diagnóstico e Suporte (Verificação do Ambiente)
+Antes de configurar o MCP, recomendamos verificar se o seu servidor CFML (Lucee ou Adobe) atende aos requisitos de conectividade e segurança (como suporte a TLS 1.3 para APIs de IA).
+
+Preparação: Copie o arquivo tools/ben_check.cfm para a raiz do seu servidor web.
+
+Execução: Acesse http://seu-servidor/ben_check.cfm no seu navegador.
+
+Análise: O script verificará sua versão do Java (11 ou superior necessária), a conectividade de saída e as permissões de gravação.
+
+Precisa de ajuda? Se o ambiente estiver "OK", mas o sistema apresentar falhas, clique no botão "Copiar Log" no script e anexe o JSON a uma Issue no GitHub.
+
 ### Obrigatórios
 
 | Dependência | Versão mínima | Como verificar |
