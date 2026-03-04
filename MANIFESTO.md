@@ -77,8 +77,10 @@ Este projeto existe em parte por causa do que ele construiu. Nomear a ferramenta
 
 Para licenças comerciais, parcerias ou conversas sobre o projeto:
 
-**Paulo Marcelo Andrade Soares Martins**
-*Criador e mantenedor de B.E.N. — A CFML-MCP-System*
+**Pê Martins**
+*pemartins+bencfml@gmail.com
+https://www.linkedin.com/in/pemartins/
+Criador e mantenedor de B.E.N. — A CFML-MCP-System*
 
 ---
 
@@ -86,4 +88,4 @@ Para licenças comerciais, parcerias ou conversas sobre o projeto:
 
 ---
 
-*Copyright © 2026 Paulo Marcelo Andrade Soares Martins. Distribuído sob Business Source License 1.1.*
+*Copyright (c) 2026 Pê Martins (pemartins+bencfml@gmail.com - https://www.linkedin.com/in/pemartins/)*
