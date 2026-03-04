@@ -77,15 +77,9 @@ Este projeto existe em parte por causa do que ele construiu. Nomear a ferramenta
 
 Para licenças comerciais, parcerias ou conversas sobre o projeto:
 
-**Pê Martins**
-*pemartins+bencfml@gmail.com
-https://www.linkedin.com/in/pemartins/
-Criador e mantenedor de B.E.N. — A CFML-MCP-System*
+**Pê Martins**- Criador e mantenedor de B.E.N. — A CFML-MCP-System
+- pemartins+bencfml@gmail.com
+- https://www.linkedin.com/in/pemartins/
 
----
 
-*"A comunidade CFML é pequena, leal, e praticamente abandonada pelos grandes players de tooling. Isso muda agora."*
 
----
-
-*Copyright (c) 2026 Pê Martins (pemartins+bencfml@gmail.com - https://www.linkedin.com/in/pemartins/)*
