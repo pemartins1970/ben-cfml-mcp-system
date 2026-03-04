@@ -335,4 +335,4 @@ For issues, questions, or feedback:
 
 ---
 
-*Copyright © 2026 Paulo Marcelo Andrade Soares Martins. Distributed under Business Source License 1.1.*
+*Copyright (c) 2026 Pê Martins (pemartins+bencfml@gmail.com - https://www.linkedin.com/in/pemartins/). Distributed under Business Source License 1.1.*
